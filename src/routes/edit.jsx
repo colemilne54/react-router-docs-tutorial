@@ -1,14 +1,11 @@
-import { 
-  Form,
-  useLoaderData,
-  redirect,
-} from "react-router-dom";
-import { updateContact } from "../contacts";
+import { Form, useLoaderData, redirect, useNavigate } from 'react-router-dom';
+import { updateContact } from '../contacts';
 
 export async function action({ request, params }) {
   const formData = await request.formData();
-  const firstName = formData.get("first");
-  const lastName = formData.get("last");
+  const navigate = useNavigate();
+  const firstName = formData.get('first');
+  const lastName = formData.get('last');
   const updates = Object.fromEntries(formData);
   updates.first;
   updates.last;
@@ -59,15 +56,18 @@ export default function EditContact() {
       </label>
       <label>
         <span>Notes</span>
-        <textarea
-          name="notes"
-          defaultValue={contact.notes}
-          rows={6}
-        />
+        <textarea name="notes" defaultValue={contact.notes} rows={6} />
       </label>
       <p>
         <button type="submit">Save</button>
-        <button type="button">Cancel</button>
+        <button
+          type="button"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Cancel
+        </button>
       </p>
     </Form>
   );
